@@ -1,0 +1,12 @@
+======================================================================
+RAPPORT D'ENTRAÎNEMENT - DÉTECTEUR D'IMAGES IA
+======================================================================
+
+Date: 2025-10-07 15:37:43
+Images réelles: 7139
+Images IA: 3000
+Workers parallèles: 25
+Seuil optimal: 0.226
+AUC-ROC: 1.000
+
+Modèle sauvegardé: models\ai_detector_model.pkl
