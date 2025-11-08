@@ -51,14 +51,17 @@ def predict():
     score, label = detector.predict(img_path)
     return jsonify({'score': float(score), 'prediction': label})
 
+
 @app.route('/upload', methods=['POST'])
 def upload():
     if not os.path.exists(MODEL_PATH):
-        return jsonify({'error': 'Model not found, please train first'}), 400
+        return jsonify({'error': 'Model not found'}), 400
+    # Vérifie qu'un fichier a été envoyé
     if 'file' not in request.files:
-        return jsonify({'error': 'No file part in the request'}), 400
+        return jsonify({'error': 'No file uploaded'}), 400
     img_file = request.files['file']
-    temp_dir = tempfile.mktemp()
+    # Sauve le fichier dans un dossier temporaire
+    temp_dir = tempfile.mkdtemp()
     img_path = os.path.join(temp_dir, str(uuid.uuid4()) + "_" + img_file.filename)
     img_file.save(img_path)
     try:
