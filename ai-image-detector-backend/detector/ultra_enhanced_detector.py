@@ -17,7 +17,7 @@ License: MIT
 import numpy as np
 import cv2
 import logging
-from typing import Dict, List, Tuple, Optional, Union
+from typing import Dict, List, Tuple, Optional, Union, Any
 from dataclasses import dataclass
 import pickle
 import time

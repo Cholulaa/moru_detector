@@ -1,0 +1,64 @@
+# Configuration Ultra-Avancée du Détecteur IA v4.0
+# ================================================
+
+feature_extraction:
+  # Activation des différents types de features
+  use_wavelets: true                    # Analyse par ondelettes (recommandé)
+  use_deep_features: false              # Features CNN (désactivé pour vitesse)
+  use_gabor_filters: true               # Filtres de Gabor directionnels
+  multiscale_analysis: true             # Analyse multi-résolution
+  
+  # Configuration des ondelettes
+  wavelet_types:
+    - 'db4'                            # Daubechies 4
+    - 'haar'                           # Haar (rapide)
+    - 'coif2'                          # Coiflets 2
+    - 'bior2.2'                        # Biorthogonal
+  
+  # Configuration des filtres de Gabor
+  gabor_frequencies: [0.1, 0.2, 0.3, 0.4]    # Fréquences spatiales
+  gabor_orientations: [0, 45, 90, 135]        # Orientations en degrés
+
+model_training:
+  # Modèles à utiliser dans l'ensemble
+  ensemble_methods:
+    - 'xgboost'                        # XGBoost (haute performance)
+    - 'lightgbm'                       # LightGBM (rapide)
+    - 'rf'                             # Random Forest (robuste)
+    - 'svm'                            # Support Vector Machine
+  
+  # Méthodes d'ensemble
+  use_stacking: true                    # Stacking avec meta-learner
+  use_feature_selection: true           # Sélection automatique des features
+  
+  # Validation croisée
+  cross_validation_folds: 5             # Nombre de plis CV
+  hyperparameter_tuning: false         # Auto-tuning (lent mais précis)
+  
+  # Équilibrage des classes
+  class_weight: 'balanced'              # Gestion déséquilibre des données
+
+preprocessing:
+  # Tailles d'images à analyser
+  image_sizes:
+    - [256, 256]                       # Résolution standard
+    - [512, 512]                       # Haute résolution (plus lent)
+  
+  # Méthodes de normalisation
+  normalization_methods:
+    - 'standard'                       # StandardScaler
+    - 'robust'                         # RobustScaler (résistant outliers)
+    - 'minmax'                         # MinMaxScaler
+  
+  # Amélioration d'image
+  noise_reduction: true                 # Réduction du bruit
+  contrast_enhancement: true            # Amélioration contraste
+
+performance:
+  # Traitement parallèle
+  parallel_processing: true             # Activer parallélisation
+  max_workers: 8                       # Nombre de threads (adapter à votre CPU)
+  
+  # Optimisations
+  batch_processing: true                # Traitement par lots
+  memory_optimization: true             # Gestion mémoire optimisée

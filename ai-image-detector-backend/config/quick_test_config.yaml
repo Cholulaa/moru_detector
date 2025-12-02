@@ -1,0 +1,40 @@
+# Configuration Test Rapide du Détecteur IA v4.0
+# ===============================================
+
+feature_extraction:
+  use_wavelets: true
+  use_deep_features: false
+  use_gabor_filters: false              # Désactivé pour vitesse
+  multiscale_analysis: false            # Désactivé pour vitesse
+  
+  wavelet_types:
+    - 'haar'                           # Ondelette la plus rapide
+  
+  gabor_frequencies: [0.2]
+  gabor_orientations: [0, 90]
+
+model_training:
+  ensemble_methods:
+    - 'rf'                             # Random Forest seul (plus rapide)
+  
+  use_stacking: false                   # Désactivé pour vitesse
+  use_feature_selection: true
+  cross_validation_folds: 3             # Réduit pour vitesse
+  hyperparameter_tuning: false
+  class_weight: 'balanced'
+
+preprocessing:
+  image_sizes:
+    - [256, 256]                       # Une seule taille
+  
+  normalization_methods:
+    - 'standard'                       # Une seule méthode
+  
+  noise_reduction: false                # Désactivé pour vitesse
+  contrast_enhancement: false           # Désactivé pour vitesse
+
+performance:
+  parallel_processing: true
+  max_workers: 4                        # Réduit pour éviter surcharge
+  batch_processing: true
+  memory_optimization: true
