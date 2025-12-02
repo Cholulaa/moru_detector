@@ -1,0 +1,145 @@
+# Configuration avancée pour AI Image Detector v3.0
+# ===================================================
+
+# Extraction de features
+feature_extraction:
+  # Features spectrales
+  use_fft_features: true
+  use_dct_features: true
+  fft_bands: 4                    # Nombre de bandes de fréquence
+  
+  # Features de texture
+  use_texture_features: true
+  use_lbp_features: true
+  use_glcm_features: true
+  lbp_configs:
+    - [8, 1]   # points, radius
+    - [16, 2]
+    - [24, 3]
+  
+  # Features de couleur
+  use_color_features: true
+  color_spaces: ['bgr', 'hsv', 'lab']
+  
+  # Features de bruit et compression
+  use_noise_features: true
+  use_compression_features: true
+  
+  # Traitement d'image
+  max_image_size: 1024           # Redimensionnement max
+  normalize_features: true
+  
+# Configuration des modèles ML
+models:
+  random_forest:
+    enabled: true
+    n_estimators: 300
+    max_depth: 20
+    min_samples_split: 5
+    min_samples_leaf: 2
+    max_features: 'sqrt'
+    class_weight: 'balanced'
+    random_state: 42
+    n_jobs: -1
+    
+  xgboost:
+    enabled: true
+    n_estimators: 200
+    max_depth: 8
+    learning_rate: 0.1
+    subsample: 0.8
+    colsample_bytree: 0.8
+    reg_alpha: 0.1
+    reg_lambda: 1.0
+    random_state: 42
+    
+  gradient_boost:
+    enabled: true
+    n_estimators: 200
+    max_depth: 8
+    learning_rate: 0.1
+    subsample: 0.8
+    random_state: 42
+    
+  svm:
+    enabled: false              # SVM désactivé par défaut (plus lent)
+    C: 1.0
+    kernel: 'rbf'
+    gamma: 'scale'
+    probability: true
+    random_state: 42
+
+# Configuration de l'ensemble
+ensemble:
+  method: 'voting'              # 'voting' ou 'stacking'
+  voting_type: 'soft'           # 'hard' ou 'soft'
+  weights: [0.4, 0.35, 0.25]    # RF, XGB, GB
+  optimize_weights: true        # Optimisation automatique des poids
+  
+# Sélection de features
+feature_selection:
+  enabled: true
+  method: 'rfe'                 # 'rfe', 'selectkbest', 'importance'
+  n_features: 60                # Nombre de features à sélectionner
+  scoring: 'f1'
+  
+# Préprocessing
+preprocessing:
+  scaler: 'standard'            # 'standard', 'robust'
+  handle_outliers: true
+  outlier_method: 'iqr'         # 'iqr', 'zscore'
+  
+# Validation et optimisation
+validation:
+  cross_validation:
+    enabled: true
+    cv_folds: 5
+    scoring: ['accuracy', 'f1', 'roc_auc']
+    
+  hyperparameter_tuning:
+    enabled: false              # Activation du tuning automatique
+    method: 'grid'              # 'grid', 'random'
+    n_iter: 50                  # Pour random search
+    
+  threshold_optimization:
+    enabled: true
+    metric: 'f1'                # Métrique à optimiser
+    
+# Sauvegarde et logging
+output:
+  model_path: 'models/enhanced_ai_detector_v3.pkl'
+  report_path: 'results/training_report.json'
+  plots_path: 'results/plots/'
+  
+logging:
+  level: 'INFO'
+  save_to_file: true
+  log_file: 'logs/training.log'
+  
+# Performance et parallélisation
+performance:
+  n_jobs: -1                    # Nombre de processus (-1 = tous les CPU)
+  batch_size: 1000              # Taille des batches pour le traitement
+  memory_limit: '4GB'           # Limite mémoire
+  
+# Métriques et évaluation
+evaluation:
+  test_size: 0.2
+  validation_size: 0.15
+  stratify: true
+  random_state: 42
+  
+  metrics:
+    - 'accuracy'
+    - 'precision'
+    - 'recall'
+    - 'f1_score'
+    - 'roc_auc'
+    - 'average_precision'
+    
+# Détection d'anomalies et robustesse
+robustness:
+  adversarial_detection: false  # Détection d'attaques adversariales
+  quality_assessment: true      # Évaluation de la qualité d'image
+  min_resolution: [64, 64]      # Résolution minimale
+  max_compression_artifacts: 0.8 # Seuil d'artefacts de compression
