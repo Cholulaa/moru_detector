@@ -17,7 +17,11 @@ License: MIT
 
 import argparse
 import sys
-import yaml
+try:
+    import yaml
+except ImportError:
+    print("❌ PyYAML non installé. Installation: pip install pyyaml")
+    sys.exit(1)
 import numpy as np
 from pathlib import Path
 from typing import List, Tuple, Dict
