@@ -19,7 +19,7 @@ import pywt
 from scipy import signal, ndimage, stats
 from scipy.fft import fft2, fftshift, dct
 from skimage import feature, measure, filters, morphology, segmentation
-from skimage.feature import local_binary_pattern, greycomatrix, greycoprops
+from skimage.feature import local_binary_pattern, graycomatrix, graycoprops
 from typing import Dict, List, Any
 import warnings
 warnings.filterwarnings('ignore')
@@ -279,13 +279,13 @@ class TextureFeatureExtractor(BaseFeatureExtractor):
         features = []
         
         try:
-            glcm = greycomatrix(img_reduced, distances, angles, levels=8, symmetric=True, normed=True)
+            glcm = graycomatrix(img_reduced, distances, angles, levels=8, symmetric=True, normed=True)
             
             # Propriétés GLCM
-            contrast = greycoprops(glcm, 'contrast')
-            dissimilarity = greycoprops(glcm, 'dissimilarity')
-            homogeneity = greycoprops(glcm, 'homogeneity')
-            energy = greycoprops(glcm, 'energy')
+            contrast = graycoprops(glcm, 'contrast')
+            dissimilarity = graycoprops(glcm, 'dissimilarity')
+            homogeneity = graycoprops(glcm, 'homogeneity')
+            energy = graycoprops(glcm, 'energy')
             
             features.extend([
                 np.mean(contrast),
@@ -382,7 +382,7 @@ class MorphologicalFeatureExtractor(BaseFeatureExtractor):
         sobel_v = filters.sobel_v(img)
         sobel_mag = np.sqrt(sobel_h**2 + sobel_v**2)
         
-        laplacian = filters.laplacian(img)
+        laplacian = filters.laplace(img)
         
         return [
             np.mean(np.abs(sobel_mag)),
@@ -441,7 +441,7 @@ class FrequencyFeatureExtractor(BaseFeatureExtractor):
         center_h, center_w = h // 2, w // 2
         
         # Analyse des pics de fréquence
-        peaks = feature.peak_local_maxima(magnitude.flatten())[0]
+        peaks = feature.peak_local_max(magnitude.flatten())
         peak_values = magnitude.flatten()[peaks]
         
         if len(peak_values) > 1:

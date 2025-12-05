@@ -28,7 +28,8 @@ app = Flask(__name__, static_folder='../../neon-scan/dist', static_url_path='')
 CORS(app, origins=['http://20.123.91.83', 'https://20.123.91.83', 'http://localhost:8000'])
 
 # Configuration
-MODEL_PATH = "models/ultra_ai_detector_model.pkl" if ULTRA_MODE else "models/ai_detector_model.pkl"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "models", "ultra_ai_detector_20251205_133124.pkl") if ULTRA_MODE else os.path.join(BASE_DIR, "models", "ai_detector_model.pkl")
 UPLOAD_FOLDER = "uploads"
 ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'webp'}
 

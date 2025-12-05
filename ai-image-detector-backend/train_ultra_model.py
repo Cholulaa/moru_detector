@@ -8,7 +8,7 @@ Utilise les nouvelles technologies et algorithmes pour une précision maximale.
 
 Usage:
     python train_ultra_model.py --real_dir dataset/real --ai_dir dataset/ai_generated
-    python train_ultra_model.py --config ultra_config.yaml
+    python train_ultra_model.py --config  -
     python train_ultra_model.py --auto_optimize
 
 Author: Enhanced by RovoDev AI
@@ -22,7 +22,7 @@ import numpy as np
 from pathlib import Path
 from typing import List, Tuple, Dict
 import logging
-from concurrent.futures import ProcessPoolExecutor, as_completed
+from concurrent.futures import ProcessPoolExecutor, ThreadPoolExecutor, as_completed
 from tqdm import tqdm
 import time
 from datetime import datetime
@@ -162,7 +162,7 @@ def extract_features_parallel_ultra(image_paths: List[Path],
             end_idx = min((batch_idx + 1) * batch_size, len(image_paths))
             batch_paths = image_paths[start_idx:end_idx]
             
-            with ProcessPoolExecutor(max_workers=max_workers) as executor:
+            with ThreadPoolExecutor(max_workers=max_workers) as executor:
                 futures = {executor.submit(extract_single_image, path): path for path in batch_paths}
                 
                 for future in as_completed(futures):

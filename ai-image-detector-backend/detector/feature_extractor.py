@@ -18,7 +18,7 @@ from scipy import signal, ndimage
 from scipy.fft import fft2, fftshift
 from scipy.stats import entropy, skew, kurtosis
 from skimage import feature, measure, filters, color
-from skimage.feature import local_binary_pattern, greycomatrix, greycoprops
+from skimage.feature import local_binary_pattern, graycomatrix, graycoprops
 import warnings
 warnings.filterwarnings('ignore')
 

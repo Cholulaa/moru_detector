@@ -1,0 +1,185 @@
+{
+  "training_time": 2505.0547511577606,
+  "dataset_stats": {
+    "real_images": 5000,
+    "ai_images": 5000,
+    "total_samples": 10000,
+    "features_count": 456
+  },
+  "model_performance": {
+    "ensemble_auc": 1.0,
+    "individual_models": {
+      "xgboost": 1.0,
+      "lightgbm": 1.0,
+      "rf": 1.0,
+      "svm": 1.0
+    },
+    "training_time": 94.00798511505127,
+    "features_count": 364
+  },
+  "model_path": "models/ultra_ai_detector_20251205_133124.pkl",
+  "config_used": {
+    "feature_extraction": {
+      "use_wavelets": true,
+      "use_deep_features": false,
+      "use_gabor_filters": true,
+      "multiscale_analysis": true,
+      "wavelet_types": [
+        "db4",
+        "haar",
+        "coif2",
+        "bior2.2"
+      ],
+      "gabor_frequencies": [
+        0.1,
+        0.2,
+        0.3,
+        0.4
+      ],
+      "gabor_orientations": [
+        0,
+        45,
+        90,
+        135
+      ]
+    },
+    "model_training": {
+      "ensemble_methods": [
+        "xgboost",
+        "lightgbm",
+        "rf",
+        "svm"
+      ],
+      "use_stacking": true,
+      "use_feature_selection": true,
+      "cross_validation_folds": 5,
+      "hyperparameter_tuning": false,
+      "class_weight": "balanced"
+    },
+    "preprocessing": {
+      "image_sizes": [
+        [
+          256,
+          256
+        ],
+        [
+          512,
+          512
+        ]
+      ],
+      "normalization_methods": [
+        "standard",
+        "robust",
+        "minmax"
+      ],
+      "noise_reduction": true,
+      "contrast_enhancement": true
+    },
+    "performance": {
+      "parallel_processing": true,
+      "max_workers": 8,
+      "batch_processing": true,
+      "memory_optimization": true
+    },
+    "advanced": {
+      "quality_thresholds": {
+        "excellent": 500,
+        "good": 200,
+        "acceptable": 50
+      },
+      "feature_extraction_timeout": 30,
+      "training_timeout": 3600,
+      "verbose_logging": false,
+      "save_intermediate_results": false
+    },
+    "profiles": {
+      "high_accuracy": {
+        "feature_extraction": {
+          "use_wavelets": true,
+          "use_gabor_filters": true,
+          "wavelet_types": [
+            "db4",
+            "haar",
+            "coif2",
+            "bior2.2"
+          ]
+        },
+        "model_training": {
+          "ensemble_methods": [
+            "xgboost",
+            "lightgbm",
+            "rf",
+            "svm"
+          ],
+          "cross_validation_folds": 5
+        },
+        "preprocessing": {
+          "image_sizes": [
+            [
+              256,
+              256
+            ],
+            [
+              512,
+              512
+            ]
+          ]
+        }
+      },
+      "high_speed": {
+        "feature_extraction": {
+          "use_wavelets": false,
+          "use_gabor_filters": false
+        },
+        "model_training": {
+          "ensemble_methods": [
+            "xgboost"
+          ],
+          "cross_validation_folds": 3
+        },
+        "preprocessing": {
+          "image_sizes": [
+            [
+              256,
+              256
+            ]
+          ],
+          "normalization_methods": [
+            "standard"
+          ]
+        }
+      },
+      "balanced": {
+        "feature_extraction": {
+          "use_wavelets": true,
+          "use_gabor_filters": true,
+          "wavelet_types": [
+            "db4",
+            "haar"
+          ]
+        },
+        "model_training": {
+          "ensemble_methods": [
+            "xgboost",
+            "rf"
+          ],
+          "cross_validation_folds": 3
+        },
+        "preprocessing": {
+          "image_sizes": [
+            [
+              256,
+              256
+            ]
+          ]
+        }
+      }
+    },
+    "hardware": {
+      "cpu_cores": 8,
+      "memory_limit_gb": 16,
+      "use_gpu": true,
+      "gpu_memory_limit_gb": 4
+    }
+  }
+}
